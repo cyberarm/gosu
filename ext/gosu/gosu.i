@@ -506,8 +506,6 @@ namespace Gosu
 
 // Font
 %ignore Gosu::Font::Font(int height, const std::string& font_name, unsigned flags);
-%ignore Gosu::Font::set_image(wchar_t wc, unsigned font_flags, const Gosu::Image& image);
-%ignore Gosu::Font::set_image(wchar_t wc, const Gosu::Image& image);
 
 %include "../../Gosu/Font.hpp"
 %extend Gosu::Font {
@@ -547,13 +545,6 @@ namespace Gosu
         }
         
         return new Gosu::Font(height, font_name);
-    }
-    
-    void set_image(wchar_t wc, VALUE source)
-    {
-        Gosu::Bitmap bitmap;
-        Gosu::load_bitmap(bitmap, source);
-        $self->set_image(wc, Gosu::Image(bitmap, Gosu::IF_SMOOTH));
     }
 }
 
