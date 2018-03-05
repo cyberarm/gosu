@@ -2,6 +2,7 @@
 #if !defined(GOSU_IS_IPHONE)
 
 #include <Gosu/Gosu.hpp>
+#include "GraphicsImpl.hpp"
 #include <SDL.h>
 #include <cstdlib>
 #include <algorithm>
@@ -329,6 +330,24 @@ void Gosu::Window::button_down(Button button)
     if (toggle_fullscreen) {
         resize(width(), height(), !fullscreen());
     }
+}
+
+Gosu::Bitmap Gosu::Window::to_bitmap()
+{
+    ensure_current_context();
+
+    Gosu::Bitmap bitmap(width(), height());
+    std::vector<std::uint32_t> pixels(width()*height());
+    std::vector<std::uint32_t> flipped_pixels(width()*height());
+
+    glReadPixels(0, 0, width(), height(), GL_RGBA, GL_UNSIGNED_INT_8_8_8_8_REV, &pixels[0]);
+
+    for (unsigned row=0; row<height(); row++) {
+        memcpy(&flipped_pixels[row*width()], &pixels[(height()-1-row)*width()], width()*4);
+    }
+    memcpy(bitmap.data(), &flipped_pixels[0], width()*height()*4);
+
+    return bitmap;
 }
 
 const Gosu::Graphics& Gosu::Window::graphics() const
