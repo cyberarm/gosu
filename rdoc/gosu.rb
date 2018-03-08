@@ -1172,12 +1172,13 @@ module Gosu
     def offset_y(theta, r); end
 
     ##
-    # @return [Float] the angular distance from (x1, y1) to (x1, y2) in degrees, where 0.0 is up. Returns 0 if both points are equal.
+    # @return [Float] the angular distance from (x1, y1) to (x1, y2) in degrees, where 0.0 is up. Returns default(=0.0) if both points are equal.
     # @param x1 [Float]
     # @param y1 [Float]
     # @param x2 [Float]
     # @param y2 [Float]
-    def angle(x1, y1, x2, y2); end
+    # @param default [Float]
+    def angle(x1, y1, x2, y2, default=0.0); end
 
     ##
     # @return [Float] the shortest angular distance from angle1 to angle2. This can be negative if counter-clockwise rotation would yield a shorter distance.
