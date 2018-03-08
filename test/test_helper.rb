@@ -44,7 +44,11 @@ module TestHelper
     output = Tempfile.new([expected, extension])
     window.to_image.save output.path
     window.to_image.save 'debug_'+expected if ENV['DEBUG']
-    assert_equal [File.binread(File.join(media_path, expected))].pack("m"), [File.binread(output.path)].pack("m"), "Screenshot should match #{expected}!"
+    if ENV['DEBUG']
+      assert_equal [File.binread(File.join(media_path, expected))].pack("m"), [File.binread(output.path)].pack("m"), "Screenshot should match #{expected}!"
+    else
+      assert [File.binread(File.join(media_path, expected))].pack("m") == [File.binread(output.path)].pack("m"), "Screenshot should match #{expected}!"
+    end
   ensure
     output.close(true)
   end
