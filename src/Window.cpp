@@ -34,12 +34,12 @@ namespace Gosu
 
             atexit(cleanup);
 
-            Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
-            
+            Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE;
+
         #if SDL_VERSION_ATLEAST(2, 0, 1)
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
         #endif
-            
+
             window =
                 SDL_CreateWindow("", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 64, 64, flags);
             if (window == nullptr) {
@@ -58,16 +58,16 @@ namespace Gosu
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 1);
             SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 1);
         #endif
-            
+
             context = SDL_GL_CreateContext(shared_window());
-            
+
             if (context == nullptr) {
                 throw_sdl_error("Could not create OpenGL context");
             }
         }
         return context;
     }
-    
+
     void ensure_current_context()
     {
         SDL_GL_MakeCurrent(shared_window(), shared_gl_context());
@@ -85,13 +85,13 @@ struct Gosu::Window::Impl
 {
     bool fullscreen;
     double update_interval;
-    
+
     // A single `bool open` is not good enough to support the tick() method: When close() is called
     // from outside the window's call graph, the next call to tick() must return false (transition
     // from CLOSING to CLOSED), but the call after that must return show the window again
     // (transition from CLOSED to OPEN).
     enum { CLOSED, OPEN, CLOSING } state = CLOSED;
-    
+
     unique_ptr<Graphics> graphics;
     unique_ptr<Input> input;
 };
@@ -108,11 +108,11 @@ Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double up
 
     // Really enable fullscreen if desired.
     resize(width, height, fullscreen);
-    
+
     SDL_GL_SetSwapInterval(1);
 
     pimpl->update_interval = update_interval;
-    
+
     input().on_button_down = [this](Button button) { button_down(button); };
     input().on_button_up   = [this](Button button) { button_up(button); };
 }
@@ -140,13 +140,13 @@ bool Gosu::Window::fullscreen() const
 void Gosu::Window::resize(unsigned width, unsigned height, bool fullscreen)
 {
     pimpl->fullscreen = fullscreen;
-    
+
     int actual_width = width;
     int actual_height = height;
     double scale_factor = 1.0;
     double black_bar_width = 0;
     double black_bar_height = 0;
-    
+
     if (fullscreen) {
         actual_width = Gosu::screen_width();
         actual_height = Gosu::screen_height();
@@ -165,23 +165,23 @@ void Gosu::Window::resize(unsigned width, unsigned height, bool fullscreen)
     else {
         double max_width = Gosu::available_width();
         double max_height = Gosu::available_height();
-        
+
         if (width > max_width || height > max_height) {
             scale_factor = min(max_width / width, max_height / height);
             actual_width  = width  * scale_factor;
             actual_height = height * scale_factor;
         }
     }
-    
+
     SDL_SetWindowFullscreen(shared_window(), fullscreen ? SDL_WINDOW_FULLSCREEN_DESKTOP : 0);
     SDL_SetWindowSize(shared_window(), actual_width, actual_height);
-    
+
 #if SDL_VERSION_ATLEAST(2, 0, 1)
     SDL_GL_GetDrawableSize(shared_window(), &actual_width, &actual_height);
 #endif
-    
+
     ensure_current_context();
-    
+
     if (!pimpl->graphics) {
         pimpl->graphics.reset(new Graphics(actual_width, actual_height));
     }
@@ -189,7 +189,7 @@ void Gosu::Window::resize(unsigned width, unsigned height, bool fullscreen)
         pimpl->graphics->set_physical_resolution(actual_width, actual_height);
     }
     pimpl->graphics->set_resolution(width, height, black_bar_width, black_bar_height);
-    
+
     if (!pimpl->input) {
         pimpl->input.reset(new Input(shared_window()));
     }
@@ -221,17 +221,17 @@ void Gosu::Window::set_caption(const string& caption)
 void Gosu::Window::show()
 {
     unsigned long time_before_tick = milliseconds();
-    
+
     while (tick()) {
         // Sleep to keep this loop from eating 100% CPU.
         unsigned long tick_time = milliseconds() - time_before_tick;
         if (tick_time < update_interval()) {
             sleep(update_interval() - tick_time);
         }
-        
+
         time_before_tick = milliseconds();
     }
-    
+
     pimpl->state = Impl::CLOSED;
 }
 
@@ -241,7 +241,7 @@ bool Gosu::Window::tick()
         pimpl->state = Impl::CLOSED;
         return false;
     }
-    
+
     if (pimpl->state == Impl::CLOSED) {
         SDL_ShowWindow(shared_window());
         pimpl->state = Impl::OPEN;
@@ -253,13 +253,28 @@ bool Gosu::Window::tick()
         SDL_GL_GetDrawableSize(shared_window(), &width, &height);
         graphics().set_physical_resolution(width, height);
     }
-    
+
     SDL_Event e;
     while (SDL_PollEvent(&e)) {
         switch (e.type) {
             case (SDL_QUIT): {
                 close();
                 break;
+            }
+            case(SDL_WINDOWEVENT): {
+              switch (e.window.event) {
+                case (SDL_WINDOWEVENT_SIZE_CHANGED): {
+                  if (width() != e.window.data1 || height() != e.window.data2) {
+                    printf("Gosu::Window::resize is resizing.\n");
+                    resize(e.window.data1, e.window.data2, fullscreen());
+                  }
+                  break;
+                }
+                default: {
+                  break;
+                }
+              }
+              break;
             }
             case (SDL_DROPFILE): {
                 char* dropped_filedir = e.drop.file;
@@ -274,29 +289,29 @@ bool Gosu::Window::tick()
             }
         }
     }
-    
+
     Song::update();
-    
+
     input().update();
-    
+
     update();
-    
+
     SDL_ShowCursor(needs_cursor());
-    
+
     if (needs_redraw()) {
         ensure_current_context();
         graphics().frame([&] {
             draw();
             FPS::register_frame();
         });
-        
+
         SDL_GL_SwapWindow(shared_window());
     }
-    
+
     if (pimpl->state == Impl::CLOSING) {
         pimpl->state = Impl::CLOSED;
     }
-    
+
     return pimpl->state == Impl::OPEN;
 }
 
@@ -311,7 +326,7 @@ void Gosu::Window::button_down(Button button)
     bool toggle_fullscreen;
 
     // Default shortcuts for toggling fullscreen mode, see: https://github.com/gosu/gosu/issues/361
-    
+
 #ifdef GOSU_IS_MAC
     // cmd+F and cmd+ctrl+F are both common shortcuts for toggling fullscreen mode on macOS.
     toggle_fullscreen = button == KB_F &&
