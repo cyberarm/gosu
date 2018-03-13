@@ -24,7 +24,7 @@ namespace Gosu
 
     static void cleanup();
 
-    static SDL_Window* shared_window()
+    static SDL_Window* shared_window(bool resizable = false)
     {
         static SDL_Window* window = nullptr;
         if (window == nullptr) {
@@ -34,7 +34,10 @@ namespace Gosu
 
             atexit(cleanup);
 
-            Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN | SDL_WINDOW_RESIZABLE;
+            Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
+            if (resizable) {
+                flags |= SDL_WINDOW_RESIZABLE;
+            }
 
         #if SDL_VERSION_ATLEAST(2, 0, 1)
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
@@ -85,6 +88,7 @@ struct Gosu::Window::Impl
 {
     bool fullscreen;
     double update_interval;
+    bool window_resizable;
 
     // A single `bool open` is not good enough to support the tick() method: When close() is called
     // from outside the window's call graph, the next call to tick() must return false (transition
@@ -104,6 +108,7 @@ Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double up
     // Fixes https://github.com/gosu/gosu/issues/369
     // (This will implicitly create graphics() and input(), and make the OpenGL context current.)
     resize(width, height, false);
+    pimpl->window_resizable = false;
     SDL_SetWindowPosition(shared_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
     // Really enable fullscreen if desired.
@@ -115,6 +120,28 @@ Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double up
 
     input().on_button_down = [this](Button button) { button_down(button); };
     input().on_button_up   = [this](Button button) { button_up(button); };
+}
+Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, bool resizable, double update_interval)
+: pimpl(new Impl)
+{
+    // Even in fullscreen mode, temporarily show the window in windowed mode to centre it.
+    // This ensures that the window will be centred correctly when exiting fullscreen mode.
+    // Fixes https://github.com/gosu/gosu/issues/369
+    // (This will implicitly create graphics() and input(), and make the OpenGL context current.)
+    shared_window(resizable); // Be the FIRST call to shared_window()
+    pimpl->window_resizable = resizable;
+    resize(width, height, false);
+    SDL_SetWindowPosition(shared_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
+
+    // Really enable fullscreen if desired.
+    resize(width, height, fullscreen);
+
+    SDL_GL_SetSwapInterval(1);
+
+    pimpl->update_interval = update_interval;
+
+    input().on_button_down = [this](Button button) { button_down(button); };
+    input().on_button_up = [this](Button button) { button_up(button); };
 }
 
 Gosu::Window::~Window()
@@ -135,6 +162,18 @@ unsigned Gosu::Window::height() const
 bool Gosu::Window::fullscreen() const
 {
     return pimpl->fullscreen;
+}
+
+bool Gosu::Window::resizable() const
+{
+    return pimpl->window_resizable;
+}
+
+void Gosu::Window::size_changed() {}
+
+void Gosu::Window::minimum_size(unsigned width, unsigned height)
+{
+    SDL_SetWindowMinimumSize(shared_window(), width, height);
 }
 
 void Gosu::Window::resize(unsigned width, unsigned height, bool fullscreen)
@@ -265,8 +304,8 @@ bool Gosu::Window::tick()
               switch (e.window.event) {
                 case (SDL_WINDOWEVENT_SIZE_CHANGED): {
                   if (width() != e.window.data1 || height() != e.window.data2) {
-                    printf("Gosu::Window::resize is resizing.\n");
                     resize(e.window.data1, e.window.data2, fullscreen());
+                    size_changed();
                   }
                   break;
                 }

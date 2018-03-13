@@ -50,11 +50,16 @@ namespace Gosu
         //! function.
         Window(unsigned width, unsigned height, bool fullscreen = false,
             double update_interval = 16.666666);
+        Window(unsigned width, unsigned height, bool fullscreen = false, bool resizable = false,
+            double update_interval = 16.666666);
         virtual ~Window();
 
         unsigned width() const;
         unsigned height() const;
         bool fullscreen() const;
+        bool resizable() const;
+        virtual void size_changed();
+        void minimum_size(unsigned width, unsigned height);
         void resize(unsigned width, unsigned height, bool fullscreen);
         
         double update_interval() const;
