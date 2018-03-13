@@ -24,7 +24,7 @@ namespace Gosu
 
     static void cleanup();
 
-    static SDL_Window* shared_window(bool resizable = false)
+    static SDL_Window* shared_window()
     {
         static SDL_Window* window = nullptr;
         if (window == nullptr) {
@@ -35,9 +35,6 @@ namespace Gosu
             atexit(cleanup);
 
             Uint32 flags = SDL_WINDOW_OPENGL | SDL_WINDOW_HIDDEN;
-            if (resizable) {
-                flags |= SDL_WINDOW_RESIZABLE;
-            }
 
         #if SDL_VERSION_ATLEAST(2, 0, 1)
             flags |= SDL_WINDOW_ALLOW_HIGHDPI;
@@ -128,8 +125,8 @@ Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, bool resi
     // This ensures that the window will be centred correctly when exiting fullscreen mode.
     // Fixes https://github.com/gosu/gosu/issues/369
     // (This will implicitly create graphics() and input(), and make the OpenGL context current.)
-    shared_window(resizable); // Be the FIRST call to shared_window()
     pimpl->window_resizable = resizable;
+    SDL_SetWindowResizable(shared_window(), (SDL_bool) resizable);
     resize(width, height, false);
     SDL_SetWindowPosition(shared_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
