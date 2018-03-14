@@ -166,8 +166,6 @@ bool Gosu::Window::resizable() const
     return pimpl->window_resizable;
 }
 
-void Gosu::Window::size_changed() {}
-
 void Gosu::Window::minimum_size(unsigned width, unsigned height)
 {
     SDL_SetWindowMinimumSize(shared_window(), width, height);
