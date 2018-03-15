@@ -57,13 +57,6 @@ namespace Gosu
         unsigned width() const;
         unsigned height() const;
         bool fullscreen() const;
-        bool resizable() const;
-
-        //! Called when the size of the window has changed.
-        virtual void size_changed() {};
-
-        //! Sets the minimum size the window can be.
-        void minimum_size(unsigned width, unsigned height);
 
         void resize(unsigned width, unsigned height, bool fullscreen);
         

@@ -161,16 +161,6 @@ bool Gosu::Window::fullscreen() const
     return pimpl->fullscreen;
 }
 
-bool Gosu::Window::resizable() const
-{
-    return pimpl->window_resizable;
-}
-
-void Gosu::Window::minimum_size(unsigned width, unsigned height)
-{
-    SDL_SetWindowMinimumSize(shared_window(), width, height);
-}
-
 void Gosu::Window::resize(unsigned width, unsigned height, bool fullscreen)
 {
     pimpl->fullscreen = fullscreen;
@@ -300,7 +290,6 @@ bool Gosu::Window::tick()
                 case (SDL_WINDOWEVENT_SIZE_CHANGED): {
                   if (width() != e.window.data1 || height() != e.window.data2) {
                     resize(e.window.data1, e.window.data2, fullscreen());
-                    size_changed();
                   }
                   break;
                 }
