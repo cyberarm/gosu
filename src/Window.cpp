@@ -97,15 +97,16 @@ struct Gosu::Window::Impl
     unique_ptr<Input> input;
 };
 
-Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double update_interval)
+Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double update_interval, bool resizable)
 : pimpl(new Impl)
 {
     // Even in fullscreen mode, temporarily show the window in windowed mode to centre it.
     // This ensures that the window will be centred correctly when exiting fullscreen mode.
     // Fixes https://github.com/gosu/gosu/issues/369
     // (This will implicitly create graphics() and input(), and make the OpenGL context current.)
-    resize(width, height, false);
     pimpl->window_resizable = false;
+    SDL_SetWindowResizable(shared_window(), (SDL_bool)resizable);
+    resize(width, height, false);
     SDL_SetWindowPosition(shared_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
 
     // Really enable fullscreen if desired.
@@ -117,28 +118,6 @@ Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, double up
 
     input().on_button_down = [this](Button button) { button_down(button); };
     input().on_button_up   = [this](Button button) { button_up(button); };
-}
-Gosu::Window::Window(unsigned width, unsigned height, bool fullscreen, bool resizable, double update_interval)
-: pimpl(new Impl)
-{
-    // Even in fullscreen mode, temporarily show the window in windowed mode to centre it.
-    // This ensures that the window will be centred correctly when exiting fullscreen mode.
-    // Fixes https://github.com/gosu/gosu/issues/369
-    // (This will implicitly create graphics() and input(), and make the OpenGL context current.)
-    pimpl->window_resizable = resizable;
-    SDL_SetWindowResizable(shared_window(), (SDL_bool) resizable);
-    resize(width, height, false);
-    SDL_SetWindowPosition(shared_window(), SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED);
-
-    // Really enable fullscreen if desired.
-    resize(width, height, fullscreen);
-
-    SDL_GL_SetSwapInterval(1);
-
-    pimpl->update_interval = update_interval;
-
-    input().on_button_down = [this](Button button) { button_down(button); };
-    input().on_button_up = [this](Button button) { button_up(button); };
 }
 
 Gosu::Window::~Window()
