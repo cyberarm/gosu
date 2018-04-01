@@ -1,6 +1,6 @@
 --- src/RubyGosu.cxx
 +++ src/RubyGosu.cxx
-@@ -2691,6 +2691,10 @@ SWIG_From_bool  (bool value)
+@@ -2677,6 +2677,10 @@ SWIG_From_bool  (bool value)
  SWIGINTERN int
  SWIG_AsCharPtrAndSize(VALUE obj, char** cptr, size_t* psize, int *alloc)
  {

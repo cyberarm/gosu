@@ -1,6 +1,6 @@
 --- src/RubyGosu.cxx
 +++ src/RubyGosu.cxx
-@@ -2670,7 +2670,9 @@ SWIGINTERN std::string Gosu_Color_inspect(Gosu::Color const *self){
+@@ -2653,7 +2653,9 @@ SWIGINTERN std::string Gosu_Color_inspect(Gosu::Color const *self){
  SWIGINTERNINLINE VALUE
  SWIG_From_std_string  (const std::string& s)
  {
