@@ -2494,7 +2494,7 @@ SWIG_ruby_failed(void)
 }
 
 
-/*@SWIG:/usr/local/Cellar/swig/3.0.12/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:C:\Users\cyber\Downloads\swigwin-3.0.12\swigwin-3.0.12\Lib\ruby\rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2DBL(VALUE *args)
 {
   VALUE obj = args[0];
@@ -2536,7 +2536,7 @@ SWIG_From_unsigned_SS_int  (unsigned int value)
 #include <string>
 
 
-/*@SWIG:/usr/local/Cellar/swig/3.0.12/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:C:\Users\cyber\Downloads\swigwin-3.0.12\swigwin-3.0.12\Lib\ruby\rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2ULONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -2738,7 +2738,7 @@ SWIG_AsPtr_std_string (VALUE obj, std::string **val)
 }
 
 
-/*@SWIG:/usr/local/Cellar/swig/3.0.12/share/swig/3.0.12/ruby/rubyprimtypes.swg,19,%ruby_aux_method@*/
+/*@SWIG:C:\Users\cyber\Downloads\swigwin-3.0.12\swigwin-3.0.12\Lib\ruby\rubyprimtypes.swg,19,%ruby_aux_method@*/
 SWIGINTERN VALUE SWIG_AUX_NUM2LONG(VALUE *args)
 {
   VALUE obj = args[0];
@@ -11949,7 +11949,7 @@ SWIGEXPORT void Init_gosu(void) {
   rb_define_const(mGosu, "LICENSES", SWIG_From_std_string(static_cast< std::string >(Gosu::LICENSES)));
   rb_define_const(mGosu, "MAJOR_VERSION", SWIG_From_int(static_cast< int >(0)));
   rb_define_const(mGosu, "MINOR_VERSION", SWIG_From_int(static_cast< int >(13)));
-  rb_define_const(mGosu, "POINT_VERSION", SWIG_From_int(static_cast< int >(3)));
+  rb_define_const(mGosu, "POINT_VERSION", SWIG_From_int(static_cast< int >(4)));
   rb_define_module_function(mGosu, "milliseconds", VALUEFUNC(_wrap_milliseconds), -1);
   rb_define_module_function(mGosu, "random", VALUEFUNC(_wrap_random), -1);
   rb_define_module_function(mGosu, "degrees_to_radians", VALUEFUNC(_wrap_degrees_to_radians), -1);
