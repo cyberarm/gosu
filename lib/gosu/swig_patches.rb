@@ -10,11 +10,12 @@ class Gosu::Window
       options = args.first || {}
       fullscreen = options[:fullscreen]
       update_interval = options[:update_interval]
+      resizable = options[:resizable]
     else
-      fullscreen, update_interval = *args
+      fullscreen, update_interval, resizable = *args
     end
     $gosu_gl_blocks = nil
-    initialize_without_hash width, height, !!fullscreen, update_interval || 16.666666
+    initialize_without_hash width, height, !!fullscreen, update_interval || 16.666666, resizable || false
   end
   
   %w(update draw needs_redraw? needs_cursor?
