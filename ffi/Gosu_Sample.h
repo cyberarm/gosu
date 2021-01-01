@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Gosu/Channel.h>
+#include "Gosu_Channel.h"
 
 #ifdef __cplusplus
 extern "C" {

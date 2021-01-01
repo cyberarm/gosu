@@ -4,14 +4,14 @@
 extern "C" {
 #endif
 
-#include <Gosu/Window.h>
-#include <Gosu/Image.h>
-#include <Gosu/Font.h>
-#include <Gosu/Color.h>
-#include <Gosu/TextInput.h>
-#include <Gosu/Sample.h>
-#include <Gosu/Song.h>
-#include <Gosu/Channel.h>
+#include "Gosu_Window.h"
+#include "Gosu_Image.h"
+#include "Gosu_Font.h"
+#include "Gosu_Color.h"
+#include "Gosu_TextInput.h"
+#include "Gosu_Sample.h"
+#include "Gosu_Song.h"
+#include "Gosu_Channel.h"
 
 // Graphics operations
 void Gosu_gl_z(double z, void function(void *data), void* data);

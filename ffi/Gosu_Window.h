@@ -1,6 +1,6 @@
 #pragma once
 #include <stdbool.h>
-#include "TextInput.h"
+#include "Gosu_TextInput.h"
 
 #ifdef __cplusplus
 extern "C" {
