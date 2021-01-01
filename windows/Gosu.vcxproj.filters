@@ -168,16 +168,7 @@
     <ClCompile Include="..\src\Channel.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\ChannelWrapper.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\Color.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ColorWrapper.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\Constants.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\DirectoriesApple.cpp">
@@ -198,16 +189,10 @@
     <ClCompile Include="..\src\Font.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\FontWrapper.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\GosuGLView.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\GosuViewController.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\GosuWrapper.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Graphics.cpp">
@@ -217,9 +202,6 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Image.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\ImageWrapper.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Input.cpp">
@@ -249,12 +231,6 @@
     <ClCompile Include="..\src\Resolution.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\src\SampleWrapper.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\SongWrapper.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
     <ClCompile Include="..\src\TexChunk.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
@@ -265,9 +241,6 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\TextInput.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\TextInputWrapper.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\Texture.cpp">
@@ -319,9 +292,6 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\src\WindowUIKit.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\src\WindowWrapper.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
@@ -410,28 +380,16 @@
     <ClInclude Include="..\include\Gosu\Buttons.hpp">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Gosu\Channel.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\Color.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Gosu\Color.hpp">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Directories.hpp">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Gosu\Font.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Gosu\Font.hpp">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Fwd.hpp">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\Gosu.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Gosu.hpp">
@@ -441,9 +399,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\GraphicsBase.hpp">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\Image.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Image.hpp">
@@ -467,16 +422,7 @@
     <ClInclude Include="..\include\Gosu\Platform.hpp">
       <Filter>Interface</Filter>
     </ClInclude>
-    <ClInclude Include="..\include\Gosu\Sample.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\Song.h">
-      <Filter>Interface</Filter>
-    </ClInclude>
     <ClInclude Include="..\include\Gosu\Text.hpp">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\TextInput.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\TextInput.hpp">
@@ -489,9 +435,6 @@
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Version.hpp">
-      <Filter>Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\include\Gosu\Window.h">
       <Filter>Interface</Filter>
     </ClInclude>
     <ClInclude Include="..\include\Gosu\Window.hpp">

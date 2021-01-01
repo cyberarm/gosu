@@ -1,5 +1,6 @@
 /lib*/Gosu*.lib
-/lib*/?.?
+/lib*/gosu-ffi.iobj
+/lib*/gosu-ffi.ipdb
 /pkg
 
 # CMake files
