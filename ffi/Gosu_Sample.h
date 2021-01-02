@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ffi_helper.h"
 #include "Gosu_Channel.h"
 
 #ifdef __cplusplus
@@ -8,11 +9,11 @@ extern "C" {
 
 typedef struct Gosu_Sample Gosu_Sample;
 
-Gosu_Sample* Gosu_Sample_create(const char* filename);
-void Gosu_Sample_destroy(Gosu_Sample* sample);
+GOSU_FFI_API Gosu_Sample* Gosu_Sample_create(const char* filename);
+GOSU_FFI_API void Gosu_Sample_destroy(Gosu_Sample* sample);
 
-Gosu_Channel* Gosu_Sample_play(Gosu_Sample *sample, double volume, double speed, bool looping);
-Gosu_Channel* Gosu_Sample_play_pan(Gosu_Sample *sample, double pan, double volume, double speed, bool looping);
+GOSU_FFI_API Gosu_Channel* Gosu_Sample_play(Gosu_Sample *sample, double volume, double speed, bool looping);
+GOSU_FFI_API Gosu_Channel* Gosu_Sample_play_pan(Gosu_Sample *sample, double pan, double volume, double speed, bool looping);
 
 #ifdef __cplusplus
 }

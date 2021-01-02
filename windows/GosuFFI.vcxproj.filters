@@ -38,6 +38,9 @@
     <ClInclude Include="..\ffi\Gosu_Window.h">
       <Filter>Interface</Filter>
     </ClInclude>
+    <ClInclude Include="..\ffi\ffi_helper.h">
+      <Filter>Interface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\ffi\Gosu.cpp">
@@ -47,9 +50,6 @@
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\ffi\Gosu_Color.cpp">
-      <Filter>Implementation</Filter>
-    </ClCompile>
-    <ClCompile Include="..\ffi\Gosu_Constants.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
     <ClCompile Include="..\ffi\Gosu_Font.cpp">
@@ -69,6 +69,9 @@
     </ClCompile>
     <ClCompile Include="..\ffi\Gosu_Window.cpp">
       <Filter>Implementation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\ffi\Gosu_Constants.h">
+      <Filter>Interface</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
