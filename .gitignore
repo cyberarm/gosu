@@ -1,4 +1,5 @@
 /lib*/Gosu*.lib
+/lib*/gosu-ffi.dll
 /lib*/gosu-ffi.iobj
 /lib*/gosu-ffi.ipdb
 /pkg

@@ -34,7 +34,7 @@
     <ClCompile Include="..\ffi\Gosu.cpp" />
     <ClCompile Include="..\ffi\Gosu_Channel.cpp" />
     <ClCompile Include="..\ffi\Gosu_Color.cpp" />
-    <ClCompile Include="..\ffi\Gosu_Constants.h" />
+    <ClCompile Include="..\ffi\Gosu_Constants.cpp" />
     <ClCompile Include="..\ffi\Gosu_Font.cpp" />
     <ClCompile Include="..\ffi\Gosu_Image.cpp" />
     <ClCompile Include="..\ffi\Gosu_Sample.cpp" />

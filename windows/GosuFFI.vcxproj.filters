@@ -70,8 +70,8 @@
     <ClCompile Include="..\ffi\Gosu_Window.cpp">
       <Filter>Implementation</Filter>
     </ClCompile>
-    <ClCompile Include="..\ffi\Gosu_Constants.h">
-      <Filter>Interface</Filter>
+    <ClCompile Include="..\ffi\Gosu_Constants.cpp">
+      <Filter>Implementation</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
