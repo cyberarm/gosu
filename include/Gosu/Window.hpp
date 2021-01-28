@@ -16,6 +16,20 @@ namespace Gosu
         WF_BORDERLESS = 4
     };
 
+    enum WindowHitTest
+    {
+        WF_HT_DEFAULT,
+        WF_HT_DRAG,
+        WF_HT_RESIZE_TOP_LEFT,
+        WF_HT_RESIZE_TOP,
+        WF_HT_RESIZE_TOP_RIGHT,
+        WF_HT_RESIZE_RIGHT,
+        WF_HT_RESIZE_BOTTOM_RIGHT,
+        WF_HT_RESIZE_BOTTOM,
+        WF_HT_RESIZE_BOTTOM_LEFT,
+        WF_HT_RESIZELEFT
+    };
+
     //! Convenient all-in-one class that serves as the foundation of a standard Gosu application.
     //! Manages initialization of all of Gosu's core components and provides timing functionality.
     //! Note that you should really only use one instance of this class at the same time.
@@ -40,6 +54,10 @@ namespace Gosu
         int height() const;
         bool fullscreen() const;
         void resize(int width, int height, bool fullscreen);
+
+        void minimize();
+        void restore();
+        void maximize();
 
         bool resizable() const;
         void set_resizable(bool resizable);
@@ -88,6 +106,11 @@ namespace Gosu
 
         //! If this function returns true, the system cursor will be visible while over the window.
         virtual bool needs_cursor() const { return true; }
+
+        //! If this function returns true, the system cursor is confined to the window.
+        virtual bool capture_cursor() const { return false; }
+
+        virtual unsigned hit_test(int x, int y) { return Gosu::WF_HT_DEFAULT; }
 
         //! This function is called when the window loses focus on some platforms.
         //! Most importantly, it is called on the iPhone or iPad when the user locks the screen.

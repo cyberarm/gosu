@@ -89,6 +89,16 @@ GOSU_FFI_API void Gosu_Window_set_needs_cursor(Gosu_Window* window, bool functio
     });
 }
 
+GOSU_FFI_API void Gosu_Window_set_capture_cursor(Gosu_Window* window, bool function(void*), void* data)
+{
+    window->capture_cursor_callback = [=] { return function(data); };
+}
+
+GOSU_FFI_API void Gosu_Window_set_hit_test(Gosu_Window* window, unsigned function(void*, int x, int y), void* data)
+{
+    window->hit_test_callback = [=](int x, int y) { return function(data, x, y); };
+}
+
 GOSU_FFI_API void Gosu_Window_set_close(Gosu_Window* window, void function(void*), void* data)
 {
     Gosu_translate_exceptions([=] {
@@ -278,4 +288,21 @@ GOSU_FFI_API void Gosu_Window_close_immediately(Gosu_Window* window)
     Gosu_translate_exceptions([=] {
         window->Gosu::Window::close();
     });
+}
+
+// Window Controls
+
+GOSU_FFI_API void Gosu_Window_minimize(Gosu_Window* window)
+{
+    window->minimize();
+}
+
+GOSU_FFI_API void Gosu_Window_restore(Gosu_Window* window)
+{
+    window->restore();
+}
+
+GOSU_FFI_API void Gosu_Window_maximize(Gosu_Window* window)
+{
+    window->maximize();
 }

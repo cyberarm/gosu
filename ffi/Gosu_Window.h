@@ -33,6 +33,9 @@ GOSU_FFI_API void Gosu_Window_set_needs_redraw(Gosu_Window* window, bool functio
                                                void* data);
 GOSU_FFI_API void Gosu_Window_set_needs_cursor(Gosu_Window* window, bool function(void* data),
                                                void* data);
+GOSU_FFI_API void Gosu_Window_set_capture_cursor(Gosu_Window* window, bool function(void* data), void* data);
+GOSU_FFI_API void Gosu_Window_set_hit_test(Gosu_Window* window, unsigned function(void* data, int x, int y),
+                              void* data);
 GOSU_FFI_API void Gosu_Window_set_close(Gosu_Window* window, void function(void* data), void* data);
 
 GOSU_FFI_API void Gosu_Window_default_button_down(Gosu_Window* window, unsigned id);
@@ -72,3 +75,10 @@ GOSU_FFI_API void Gosu_Window_set_mouse_y(Gosu_Window* window, double height);
 GOSU_FFI_API void Gosu_Window_show(Gosu_Window* window);
 GOSU_FFI_API bool Gosu_Window_tick(Gosu_Window* window);
 GOSU_FFI_API void Gosu_Window_close_immediately(Gosu_Window* window);
+
+
+// Window Controls
+
+GOSU_FFI_API void Gosu_Window_minimize(Gosu_Window* window);
+GOSU_FFI_API void Gosu_Window_restore(Gosu_Window* window);
+GOSU_FFI_API void Gosu_Window_maximize(Gosu_Window* window);

@@ -68,6 +68,12 @@ namespace Gosu
     {
         SDL_GL_MakeCurrent(shared_window(), shared_gl_context());
     }
+
+    SDL_HitTestResult window_hit_test(SDL_Window* win, const SDL_Point* point, void* data)
+    {
+        Gosu::Window* window = reinterpret_cast<Gosu::Window*>(data);
+        return (SDL_HitTestResult) window->hit_test(point->x, point->y);
+    }
 }
 
 struct Gosu::Window::Impl
@@ -111,6 +117,8 @@ Gosu::Window::Window(int width, int height, unsigned window_flags, double update
     input().on_button_up   = [this](Button button) { button_up(button); };
     input().on_gamepad_connected    = [this](int index) { gamepad_connected(index); };
     input().on_gamepad_disconnected = [this](int index) { gamepad_disconnected(index); };
+
+    SDL_SetWindowHitTest(shared_window(), window_hit_test, this);
 }
 
 Gosu::Window::~Window()
@@ -205,6 +213,21 @@ void Gosu::Window::resize(int width, int height, bool fullscreen)
     }
     pimpl->input->set_mouse_factors(1 / scale_factor, 1 / scale_factor,
                                     black_bar_width, black_bar_height);
+}
+
+void Gosu::Window::minimize()
+{
+    SDL_MinimizeWindow(shared_window());
+}
+
+void Gosu::Window::restore()
+{
+    SDL_RestoreWindow(shared_window());
+}
+
+void Gosu::Window::maximize()
+{
+    SDL_MaximizeWindow(shared_window());
 }
 
 bool Gosu::Window::resizable() const
@@ -348,6 +371,7 @@ bool Gosu::Window::tick()
     update();
 
     SDL_ShowCursor(needs_cursor());
+    SDL_SetWindowGrab(shared_window(), (SDL_bool) capture_cursor());
 
     if (needs_redraw()) {
         ensure_current_context();

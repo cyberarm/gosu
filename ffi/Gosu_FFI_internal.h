@@ -130,6 +130,18 @@ struct Gosu_Window : public Gosu::Window
         return Window::needs_cursor();
     }
 
+    bool capture_cursor() const override
+    {
+        if (capture_cursor_callback) return capture_cursor_callback();
+        return Window::capture_cursor();
+    }
+
+    unsigned hit_test(int x, int y) override
+    {
+        if (hit_test_callback) return hit_test_callback(x, y);
+        return Window::hit_test(x, y);
+    }
+
     void close() override
     {
         if (close_callback != nullptr) return close_callback();
@@ -145,5 +157,7 @@ struct Gosu_Window : public Gosu::Window
     std::function<void(const char* filename)> drop_callback;
     std::function<bool()> needs_redraw_callback;
     std::function<bool()> needs_cursor_callback;
+    std::function<bool()> capture_cursor_callback;
+    std::function<unsigned(int x, int y)> hit_test_callback;
     std::function<void()> close_callback;
 };
