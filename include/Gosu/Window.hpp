@@ -27,7 +27,7 @@ namespace Gosu
         WF_HT_RESIZE_BOTTOM_RIGHT,
         WF_HT_RESIZE_BOTTOM,
         WF_HT_RESIZE_BOTTOM_LEFT,
-        WF_HT_RESIZELEFT
+        WF_HT_RESIZE_LEFT
     };
 
     //! Convenient all-in-one class that serves as the foundation of a standard Gosu application.
